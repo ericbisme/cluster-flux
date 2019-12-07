@@ -87,4 +87,5 @@ spec:
         domainsList:
           - main: "*.ericbisme.net"
       dnsProvider:
+        name: route53
         existingSecretName: "traefik-route53-dnsprovider-config"
