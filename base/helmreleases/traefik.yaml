@@ -14,77 +14,77 @@ spec:
     name: traefik
     version: 1.82.3
   values:
-rbac:
-  enabled: true
+    rbac:
+      enabled: true
 
-ssl:
-  enabled:  true
-  enforced: true
+    ssl:
+      enabled:  true
+      enforced: true
 
-resources:
-  limits:
-    cpu: 50m
-    memory: 256Mi
-  requests:
-    cpu: 10m
-    memory: 128Mi
+    resources:
+      limits:
+        cpu: 50m
+        memory: 256Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
 
-metrics:
-  prometheus:
-    enabled: true
-    ## If true, prevents exposing port 8080 on the main Traefik service, reserving
-    ## it to the dashboard service only
-    restrictAccess: false
+    metrics:
+      prometheus:
+        enabled: true
+        ## If true, prevents exposing port 8080 on the main Traefik service, reserving
+        ## it to the dashboard service only
+        restrictAccess: false
 
-## Save ACME certs to a persistent volume. WARNING: If you do not do this, you will re-request
-## certs every time a pod (re-)starts and you WILL be rate limited!
-persistence:
-  enabled: true
-  annotations: {}
-  ## acme data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  storageClass: "managed-nfs-storage"
-  accessMode: ReadWriteOnce
-  size: 1Gi
+    ## Save ACME certs to a persistent volume. WARNING: If you do not do this, you will re-request
+    ## certs every time a pod (re-)starts and you WILL be rate limited!
+    persistence:
+      enabled: true
+      annotations: {}
+      ## acme data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: "managed-nfs-storage"
+      accessMode: ReadWriteOnce
+      size: 1Gi
 
-dashboard:
-  enabled: true
-  domain: traefik.ericbisme.net
-  service: {}
-    # annotations:
-    #   key: value
+    dashboard:
+      enabled: true
+      domain: traefik.ericbisme.net
+      service: {}
+        # annotations:
+        #   key: value
 
-ingress: {}
-  # annotations:
-  #   key: value
-  # labels:
-  #   key: value
+    ingress: {}
+      # annotations:
+      #   key: value
+      # labels:
+      #   key: value
 
-auth: {}
-  # basic:
-  #   username: password
+    auth: {}
+      # basic:
+      #   username: password
 
-statistics: {}
-  ## Number of recent errors to show in the ‘Health’ tab
-  # recentErrors:
+    statistics: {}
+      ## Number of recent errors to show in the ‘Health’ tab
+      # recentErrors:
 
-acme:
-  onHostRule: false
-  logging: true
-  enabled: true
-  email:   webmaster@ericbisme.net
-  staging: false
-  challengeType: dns-01
-  resolvers:
-    - 1.1.1.1
-  domains:
-    enabled: true
-    domainsList:
-      - main: "*.ericbisme.net"
-  dnsProvider:
-    existingSecretName: "traefik-route53-dnsprovider-config"
+    acme:
+      onHostRule: false
+      logging: true
+      enabled: true
+      email:   webmaster@ericbisme.net
+      staging: false
+      challengeType: dns-01
+      resolvers:
+        - 1.1.1.1
+      domains:
+        enabled: true
+        domainsList:
+          - main: "*.ericbisme.net"
+      dnsProvider:
+        existingSecretName: "traefik-route53-dnsprovider-config"
