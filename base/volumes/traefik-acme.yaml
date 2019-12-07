@@ -11,7 +11,7 @@ spec:
   capacity:
     storage: 200Mi
   hostPath:
-    path: /mnt/k8s_storage/traefik-acme-pvc
+    path: /mnt/k8s_storage/traefik-acme
     type: ""
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
