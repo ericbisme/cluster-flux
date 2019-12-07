@@ -14,6 +14,8 @@ helm-operator:
 	--set configureRepositories.enable=true \
 	--set configureRepositories.repositories[0].name=stable \
 	--set configureRepositories.repositories[0].url=https://kubernetes-charts.storage.googleapis.com \
+	--set configureRepositories.repositories[1].name=fluxcd \
+	--set configureRepositories.repositories[1].url=https://charts.fluxcd.io \
 	--set configureRepositories.repositories[1].name=podinfo \
 	--set configureRepositories.repositories[1].url=https://stefanprodan.github.io/podinfo \
 	> helm-operator.yaml
