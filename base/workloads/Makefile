@@ -17,3 +17,4 @@ helm-operator:
 	--set configureRepositories.repositories[1].name=podinfo \
 	--set configureRepositories.repositories[1].url=https://stefanprodan.github.io/podinfo \
 	> helm-operator.yaml
+	yq w -i -d'*' helm-operator.yaml metadata.namespace "flux"
