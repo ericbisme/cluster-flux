@@ -40,7 +40,8 @@ spec:
     ## certs every time a pod (re-)starts and you WILL be rate limited!
     persistence:
       enabled: true
-      existingClaim: traefik-acme-perm
+      storageClass: "-"
+      existingClaim: traefik-acme
       annotations: {}
       accessMode: ReadWriteMany
       size: 200Mi
