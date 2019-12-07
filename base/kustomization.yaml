@@ -1,0 +1,3 @@
+resources:
+  - namespaces/klippy.yaml
+  - namespaces/operators.yaml
