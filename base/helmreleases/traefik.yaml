@@ -48,7 +48,7 @@ spec:
       ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
       ##   GKE, AWS & OpenStack)
       ##
-      storageClass: "managed-nfs-storage"
+      existingClaim: traefik-acme
       accessMode: ReadWriteOnce
       size: 1Gi
 
@@ -78,7 +78,7 @@ spec:
       logging: true
       enabled: true
       email:   webmaster@ericbisme.net
-      staging: false
+      staging: true
       challengeType: dns-01
       resolvers:
         - 1.1.1.1
