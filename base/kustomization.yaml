@@ -1,5 +1,6 @@
 resources:
   - crd/flux-helm-release-crd.yaml
+  - helmreleases/metrics-server.yaml
   - namespaces/klippy.yaml
   - namespaces/operators.yaml
   - workloads/helm-operator.yaml
