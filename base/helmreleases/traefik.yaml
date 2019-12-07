@@ -40,6 +40,7 @@ spec:
     ## certs every time a pod (re-)starts and you WILL be rate limited!
     persistence:
       enabled: true
+      existingClaim: traefik-acme
       annotations: {}
       ## acme data Persistent Volume Storage Class
       ## If defined, storageClassName: <storageClass>
@@ -48,9 +49,6 @@ spec:
       ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
       ##   GKE, AWS & OpenStack)
       ##
-      existingClaim: traefik-acme
-      accessMode: ReadWriteOnce
-      size: 1Gi
 
     dashboard:
       enabled: true

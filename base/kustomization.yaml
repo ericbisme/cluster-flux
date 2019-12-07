@@ -5,4 +5,5 @@ resources:
   - helmreleases/traefik.yaml
   - namespaces/klippy.yaml
   - namespaces/operators.yaml
+  - volumes/traefik-acme.yaml
   - workloads/helm-operator.yaml
