@@ -78,7 +78,7 @@ spec:
       logging: true
       enabled: true
       email:   webmaster@ericbisme.net
-      staging: true
+      staging: false
       challengeType: dns-01
       resolvers:
         - 1.1.1.1
