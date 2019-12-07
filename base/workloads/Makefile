@@ -9,6 +9,9 @@ clean:
 helm-operator:
 	helm3 template --name-template helm-operator fluxcd/helm-operator \
 	--namespace flux \
+	--set git.ssh.secretName=flux-git-deploy \
+	--set extraEnvs[0].name=HELM_VERSION \
+  --set extraEnvs[0].value=v3 \
 	--set image.repository=docker.io/fluxcd/helm-operator-prerelease \
 	--set image.tag=helm-v3-dev-53b6a21d \
 	--set configureRepositories.enable=true \
