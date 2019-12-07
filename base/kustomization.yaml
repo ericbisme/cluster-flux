@@ -1,3 +1,5 @@
 resources:
+  - crd/flux-helm-release-crd.yaml
   - namespaces/klippy.yaml
   - namespaces/operators.yaml
+  - workloads/helm-operator.yaml

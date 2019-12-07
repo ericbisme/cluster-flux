@@ -1,0 +1,166 @@
+---
+# Source: helm-operator/templates/git-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-operator-git-deploy
+type: Opaque
+---
+# Source: helm-operator/templates/helm-repositories.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flux-helm-repositories
+type: Opaque
+data:
+  repositories.yaml: YXBpVmVyc2lvbjogdjEKZ2VuZXJhdGVkOiAwMDAxLTAxLTAxVDAwOjAwOjAwWgpyZXBvc2l0b3JpZXM6Ci0gbmFtZTogc3RhYmxlCiAgdXJsOiBodHRwczovL2t1YmVybmV0ZXMtY2hhcnRzLnN0b3JhZ2UuZ29vZ2xlYXBpcy5jb20KICBjYWNoZTogL3Zhci9mbHV4ZC9oZWxtL3JlcG9zaXRvcnkvY2FjaGUvc3RhYmxlLWluZGV4LnlhbWwKICBjYUZpbGU6ICIiCiAgY2VydEZpbGU6ICIiCiAga2V5RmlsZTogIiIKICBwYXNzd29yZDogIiIKICB1c2VybmFtZTogIiIKLSBuYW1lOiBwb2RpbmZvCiAgdXJsOiBodHRwczovL3N0ZWZhbnByb2Rhbi5naXRodWIuaW8vcG9kaW5mbwogIGNhY2hlOiAvdmFyL2ZsdXhkL2hlbG0vcmVwb3NpdG9yeS9jYWNoZS9wb2RpbmZvLWluZGV4LnlhbWwKICBjYUZpbGU6ICIiCiAgY2VydEZpbGU6ICIiCiAga2V5RmlsZTogIiIKICBwYXNzd29yZDogIiIKICB1c2VybmFtZTogIiI=
+---
+# Source: helm-operator/templates/kube.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: helm-operator-kube-config
+data:
+  config: |
+    apiVersion: v1
+    clusters: []
+    contexts:
+    - context:
+        cluster: ""
+        namespace: default
+        user: ""
+      name: default
+    current-context: default
+    kind: Config
+    preferences: {}
+    users: []
+---
+# Source: helm-operator/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: helm-operator
+  labels:
+    app: helm-operator
+    chart: helm-operator-0.3.0
+    release: helm-operator
+    heritage: Helm
+---
+# Source: helm-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: helm-operator
+  labels:
+    app: helm-operator
+    chart: helm-operator-0.3.0
+    release: helm-operator
+    heritage: Helm
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - nonResourceURLs:
+      - '*'
+    verbs:
+      - '*'
+---
+# Source: helm-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: helm-operator
+  labels:
+    app: helm-operator
+    chart: helm-operator-0.3.0
+    release: helm-operator
+    heritage: Helm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: helm-operator
+subjects:
+  - name: helm-operator
+    namespace: "flux"
+    kind: ServiceAccount
+---
+# Source: helm-operator/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helm-operator
+  labels:
+    app: helm-operator
+    chart: helm-operator-0.3.0
+    release: helm-operator
+    heritage: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helm-operator
+      release: helm-operator
+  template:
+    metadata:
+      annotations:
+        checksum/repositories: "d8e240babb4677718b380d825e79e99c1829e04f197657d3a0ddb069b0121ecb"
+      labels:
+        app: helm-operator
+        release: helm-operator
+    spec:
+      serviceAccountName: helm-operator
+      volumes:
+      - name: git-key
+        secret:
+          secretName: helm-operator-git-deploy
+          defaultMode: 0400
+      - name: "repositories-yaml"
+        secret:
+          secretName: "flux-helm-repositories"
+      - name: "repositories-cache"
+        emptyDir: {}
+      containers:
+      - name: flux-helm-operator
+        image: "docker.io/fluxcd/helm-operator-prerelease:helm-v3-dev-53b6a21d"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 3030
+        livenessProbe:
+          httpGet:
+            port: 3030
+            path: /healthz
+          initialDelaySeconds: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            port: 3030
+            path: /healthz
+          initialDelaySeconds: 1
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: git-key
+          mountPath: /etc/fluxd/ssh
+          readOnly: true
+        - name: "repositories-yaml"
+          mountPath: /var/fluxd/helm/repository/repositories.yaml
+          subPath: repositories.yaml
+          readOnly: true
+        - name: "repositories-cache"
+          mountPath: /var/fluxd/helm/repository/cache
+        args:
+        - --log-format=fmt
+        - --git-timeout=20s
+        - --git-poll-interval=5m
+        - --charts-sync-interval=3m
+        - --update-chart-deps=true
+        - --log-release-diffs=false
+        - --workers=2
+        - --tiller-namespace=kube-system
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
