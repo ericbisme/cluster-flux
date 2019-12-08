@@ -73,6 +73,8 @@ spec:
     ## Deploy a Prometheus instance
     ##
     prometheus:
+      annotations:
+        linkerd.io/inject: enabled
       ingress:
         enabled: true
         annotations:

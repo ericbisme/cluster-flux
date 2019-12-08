@@ -74,6 +74,9 @@ spec:
       config:
         claimName: "plex-config"
 
+    podAnnotations:
+      linkerd.io/inject: enabled
+
     resources:
       limits:
         cpu: 4
