@@ -21,3 +21,19 @@ spec:
           addresses:
           - 192.168.10.128-192.168.10.254
           avoid-buggy-ips: true
+    controller:
+      resources:
+        requests:
+          cpu: 1m
+          memory: 4Mi
+        limits:
+          cpu: 16m
+          memory: 16Mi
+    speaker:
+      resources:
+        requests:
+          cpu: 1m
+          memory: 4Mi
+        limits:
+          cpu: 16m
+          memory: 16Mi
