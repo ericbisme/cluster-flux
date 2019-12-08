@@ -6,4 +6,5 @@ resources:
   - namespaces/klippy.yaml
   - namespaces/operators.yaml
   - volumes/traefik-acme.yaml
+  - volumes/calibre.yaml
   - workloads/helm-operator.yaml

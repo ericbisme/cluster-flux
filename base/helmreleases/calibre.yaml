@@ -1,0 +1,47 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: calibre
+  namespace: kube-system
+spec:
+  releaseName: calibre
+  targetNamespace: kube-system
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: calibre
+    version: 0.12.0
+  values:
+    volumes:
+    - name: calibre
+      persistentVolumeClaim:
+        claimName: media
+    - name: calibre-web
+      persistentVolumeClaim:
+        claimName: calibre-web
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+      path: /
+      hosts:
+        - books.ericbisme.net
+      tls: []
+
+    persistence:
+      data:
+        claimName: "books"
+      config:
+        claimName: "calibre-config"
+
+    resources:
+      limits:
+        cpu: 150m
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi

@@ -1,0 +1,58 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-config
+  namespace: thepit
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/k8s_storage/calibre-config"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: books
+  namespace: thepit
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadOnlyMany
+  hostPath:
+    path: "/mnt/bulk_storage/mediaserver/books"
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: calibre-config
+  namespace: thepit
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Mi
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: books
+  namespace: thepit
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Gi
+
