@@ -29,6 +29,8 @@ spec:
         kubernetes.io/tls-acme: "true"
       hosts:
         - host: books.ericbisme.net
+          paths: 
+            - "/"
 
     persistence:
       data:
