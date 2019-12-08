@@ -1,11 +1,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: calibre-web
+  name: plex
   namespace: thepit
   helm.fluxcd.io/automated: "true"
 spec:
-  releaseName: calibre-web
+  releaseName: plex
   targetNamespace: thepit
   timeout: 300
   resetValues: false
