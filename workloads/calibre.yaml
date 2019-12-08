@@ -1,18 +1,18 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: calibre
-  namespace: kube-system
+  name: calibre-web
+  namespace: thepit
 spec:
-  releaseName: calibre
-  targetNamespace: kube-system
+  releaseName: calibre-web
+  targetNamespace: thepit
   timeout: 300
   resetValues: false
   forceUpgrade: false
   chart:
-    repository: https://kubernetes-charts.storage.googleapis.com/
-    name: calibre
-    version: 0.12.0
+    git: https://github.com/ericbisme/cailbre-web.git
+    ref: master
+    path: /
   values:
     volumes:
     - name: calibre
