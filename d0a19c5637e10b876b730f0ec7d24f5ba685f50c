@@ -1,0 +1,1 @@
+{"jobID":"0028cf1d-a82a-7e0a-72f5-7ff5c6ee9a67","spec":{"type":"policy","cause":{"Message":"unlocking for auto update","User":"Eric Bolinger \u003cericb@ericbisme.net\u003e"},"spec":{"flux:deployment/helm-operator":{"add":{},"remove":{"locked":"true","locked_msg":"true","locked_user":"true"}}}},"result":null}
