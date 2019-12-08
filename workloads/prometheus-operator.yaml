@@ -18,6 +18,8 @@ spec:
     prometheusOperator:
       createCustomResource: false
       cleanupCustomResource: false
+      podAnnotations:
+        linkerd.io/inject: enabled
     alertmanager:
       ingress:
         enabled: true
