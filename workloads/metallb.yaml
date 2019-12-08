@@ -24,7 +24,7 @@ spec:
     controller:
       resources:
         requests:
-          cpu: 100m
+          cpu: 50m
           memory: 4Mi
         limits:
           cpu: 150m
