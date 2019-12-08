@@ -1,0 +1,1 @@
+{"jobID":"e9b58329-33d8-dc64-b38c-9e9ceb14a92a","spec":{"type":"policy","cause":{"Message":"seeing lock commit work","User":"Eric Bolinger \u003cericb@ericbisme.net\u003e"},"spec":{"flux:deployment/helm-operator":{"add":{"locked":"true","locked_msg":"seeing lock commit work","locked_user":"Eric Bolinger \u003cericb@ericbisme.net\u003e"},"remove":{}}}},"result":null}
