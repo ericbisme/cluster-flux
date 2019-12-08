@@ -1,9 +1,0 @@
-resources:
-  - crd/flux-helm-release-crd.yaml
-  - helmreleases/metallb.yaml
-  - helmreleases/metrics-server.yaml
-  - helmreleases/traefik.yaml
-  - namespaces/klippy.yaml
-  - namespaces/operators.yaml
-  - volumes/traefik-acme.yaml
-  - volumes/calibre.yaml
