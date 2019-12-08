@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -89,6 +90,10 @@ metadata:
     release: helm-operator
     heritage: Helm
   namespace: flux
+  annotations:
+    fluxcd.io/locked: 'true'
+    fluxcd.io/locked_msg: seeing lock commit work
+    fluxcd.io/locked_user: Eric Bolinger <ericb@ericbisme.net>
 spec:
   replicas: 1
   selector:
