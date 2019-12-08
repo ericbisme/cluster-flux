@@ -38,6 +38,12 @@ spec:
         ## it to the dashboard service only
         restrictAccess: false
 
+    deployment:
+      annotations:
+        linkerd.io/inject: enabled
+      podAnnotations:
+        linkerd.io/inject: enabled
+
     dashboard:
       enabled: true
       domain: traefik.ericbisme.net
