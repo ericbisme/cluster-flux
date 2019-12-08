@@ -36,23 +36,6 @@ spec:
         ## it to the dashboard service only
         restrictAccess: false
 
-    ## Save ACME certs to a persistent volume. WARNING: If you do not do this, you will re-request
-    ## certs every time a pod (re-)starts and you WILL be rate limited!
-    persistence:
-      enabled: true
-      storageClass: "-"
-      existingClaim: 'traefik-acme'
-      annotations: {}
-      accessMode: ReadWriteMany
-      size: 200Mi
-      ## acme data Persistent Volume Storage Class
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-
     dashboard:
       enabled: true
       domain: traefik.ericbisme.net
@@ -75,6 +58,10 @@ spec:
       # recentErrors:
 
     acme:
+      persistence:
+        enabled: true
+        storageClass: "-"
+        existingClaim: 'traefik-acme'
       onHostRule: false
       logging: true
       enabled: true
