@@ -39,6 +39,12 @@ spec:
       config:
         claimName: "calibre-config"
 
+    annotations:
+      linkerd.io/inject: enabled
+
+    podAnnotations:
+      linkerd.io/inject: enabled
+
     resources:
       limits:
         cpu: 150m
