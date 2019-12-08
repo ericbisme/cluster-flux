@@ -41,7 +41,7 @@ spec:
     persistence:
       enabled: true
       storageClass: "-"
-      existingClaim: "traefik-acme"
+      existingClaim: 'traefik-acme'
       annotations: {}
       accessMode: ReadWriteMany
       size: 200Mi
