@@ -1,0 +1,83 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: thepit
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: calibre-web
+  targetNamespace: thepit
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    git: https://github.com/munnerz/kube-plex
+    ref: 4604249
+    path: charts/kube-plex
+  values:
+    image:
+      tag: plexpass
+      pullPolicy: IfNotPresent
+
+    kubePlex:
+      enabled: false
+      repository: quay.io/munnerz/kube-plex
+      tag: latest
+      pullPolicy: Always
+
+    nodeSelector:
+      kubernetes.io/hostname: k8s-node2
+
+    # Set the timezone of the plex server
+    timezone: America/Denver
+
+    service:
+      type: ClusterIP
+      port: 32400
+
+    ingress:
+      enabled: true
+      # Used to create an Ingress record.
+      hosts:
+        - plex.ericbisme.net
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: true
+      tls:
+        # Secrets must be manually created in the namespace.
+        # - secretName: chart-example-tls
+        #   hosts:
+        #     - chart-example.local
+
+    rbac:
+      create: true
+      # Specify create: false and serviceAccountName to manually manage the service
+      # account for this deployment
+      ## serviceAccountName: ""
+
+    persistence:
+      transcode:
+        enabled: false
+        # Optionally specify claimName to manually override the PVC to be used for
+        # the transcode directory. If claimName is specified, storageClass and size
+        # are ignored.
+        claimName: "plex-transcode"
+        # Optionally specify a storage class to be used for the transcode directory.
+        # If not specified and claimName is not specified, the default storage
+        # class will be used.
+        # storageClass: ""
+        # The requested size of the volume to be used when creating a
+        # PersistentVolumeClaim.
+        size: 20Gi
+      data:
+        claimName: "media"
+      config:
+        claimName: "plex-config"
+
+    resources:
+      limits:
+        cpu: 4
+        memory: 16Gi
+      requests:
+        cpu: 250m
+        memory: 500Mi

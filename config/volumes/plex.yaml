@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-config
+  namespace: thepit
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/bulk_storage/mediaserver/plex-config"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media
+  namespace: thepit
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadOnlyMany
+  hostPath:
+    path: "/mnt/bulk_storage/mediaserver/media"
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: plex-config
+  namespace: thepit
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: media
+  namespace: thepit
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 200Gi
