@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: calibre-web
   namespace: thepit
+  helm.fluxcd.io/automated: "true"
 spec:
   releaseName: calibre-web
   targetNamespace: thepit
