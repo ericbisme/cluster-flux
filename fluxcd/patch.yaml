@@ -14,7 +14,7 @@ spec:
             - --memcached-service=
             - --ssh-keygen-dir=/var/fluxd/keygen
             - --git-branch=master
-            - --git-path=overlays/thepit,workloads
+            - --git-path=overlays/thepit,workloads,namespaces
             - --git-user=ericbisme
             - --git-email=ericbisme@users.noreply.github.com
             - --git-url=git@github.com:ericbisme/cluster-flux
