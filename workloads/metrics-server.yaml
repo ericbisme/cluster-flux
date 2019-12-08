@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: metrics-server
   namespace: kube-system
+  helm.fluxcd.io/automated: "true"
 spec:
   releaseName: metrics-server
   targetNamespace: kube-system
