@@ -12,7 +12,7 @@ spec:
   forceUpgrade: false
   chart:
     git: https://github.com/munnerz/kube-plex
-    ref: 4604249
+    ref: "4604249"
     path: charts/kube-plex
   values:
     image:
