@@ -27,10 +27,8 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         kubernetes.io/tls-acme: "true"
-      path: /
       hosts:
-        - books.ericbisme.net
-      tls: []
+        - host: books.ericbisme.net
 
     persistence:
       data:
