@@ -3,6 +3,8 @@ kind: HelmRelease
 metadata:
   name: traefik
   namespace: kube-system
+  helm.fluxcd.io/automated: "true"
+  helm.fluxcd.io/tag.chart-image: semver:~1
 spec:
   releaseName: traefik
   targetNamespace: kube-system
