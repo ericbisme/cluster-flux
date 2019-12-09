@@ -19,58 +19,58 @@ spec:
     strategyType: Recreate
 
     image:
-    	repository: quay.io/external_storage/nfs-client-provisioner
-    	tag: v3.1.0-k8s1.11
-    	pullPolicy: IfNotPresent
+      repository: quay.io/external_storage/nfs-client-provisioner
+      tag: v3.1.0-k8s1.11
+      pullPolicy: IfNotPresent
 
     nfs:
-    	server: 192.168.10.126
-    	path: /mnt/k8s_storage/dynamic_pvclaims
-    	mountOptions:
+      server: 192.168.10.126
+      path: /mnt/k8s_storage/dynamic_pvclaims
+      mountOptions:
 
     # For creating the StorageClass automatically:
     storageClass:
-    	create: true
+      create: true
 
-    	# Set a provisioner name. If unset, a name will be generated.
-    	# provisionerName:
+      # Set a provisioner name. If unset, a name will be generated.
+      # provisionerName:
 
-    	# Set StorageClass as the default StorageClass
-    	# Ignored if storageClass.create is false
-    	defaultClass: true
+      # Set StorageClass as the default StorageClass
+      # Ignored if storageClass.create is false
+      defaultClass: true
 
-    	# Set a StorageClass name
-    	# Ignored if storageClass.create is false
-    	name: managed-nfs-storage
+      # Set a StorageClass name
+      # Ignored if storageClass.create is false
+      name: managed-nfs-storage
 
-    	# Allow volume to be expanded dynamically
-    	allowVolumeExpansion: true
+      # Allow volume to be expanded dynamically
+      allowVolumeExpansion: true
 
-    	# Method used to reclaim an obsoleted volume
-    	reclaimPolicy: Delete
+      # Method used to reclaim an obsoleted volume
+      reclaimPolicy: Delete
 
-    	# When set to false your PVs will not be archived by the provisioner upon deletion of the PVC.
-    	archiveOnDelete: true
+      # When set to false your PVs will not be archived by the provisioner upon deletion of the PVC.
+      archiveOnDelete: true
 
     ## For RBAC support:
     rbac:
-    	create: true
+      create: true
 
     # If true, create & use Pod Security Policy resources
     # https://kubernetes.io/docs/concepts/policy/pod-security-policy/
     podSecurityPolicy:
-    	enabled: true
+      enabled: true
 
     ## Set pod priorityClassName
     # priorityClassName: ""
 
     serviceAccount:
-    	create: true
+      create: true
 
     resources: {}
-    	limits:
+      limits:
         cpu: 50m
         memory: 32Mi
-    	requests:
+      requests:
         cpu: 5m
         memory: 16Mi
