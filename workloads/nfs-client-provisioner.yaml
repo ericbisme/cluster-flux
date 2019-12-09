@@ -1,0 +1,76 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nfs-client-provisioner
+  namespace: kube-system
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: nfs-client-provisioner
+  targetNamespace: kube-system
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: nfs-client-provisioner
+    version: 1.2.8
+  values:
+		replicaCount: 1
+		strategyType: Recreate
+
+		image:
+			repository: quay.io/external_storage/nfs-client-provisioner
+			tag: v3.1.0-k8s1.11
+			pullPolicy: IfNotPresent
+
+		nfs:
+			server: 192.168.10.126
+			path: /mnt/k8s_storage/dynamic_pvclaims
+			mountOptions:
+
+		# For creating the StorageClass automatically:
+		storageClass:
+			create: true
+
+			# Set a provisioner name. If unset, a name will be generated.
+			# provisionerName:
+
+			# Set StorageClass as the default StorageClass
+			# Ignored if storageClass.create is false
+			defaultClass: true
+
+			# Set a StorageClass name
+			# Ignored if storageClass.create is false
+			name: managed-nfs-storage
+
+			# Allow volume to be expanded dynamically
+			allowVolumeExpansion: true
+
+			# Method used to reclaim an obsoleted volume
+			reclaimPolicy: Delete
+
+			# When set to false your PVs will not be archived by the provisioner upon deletion of the PVC.
+			archiveOnDelete: true
+
+		## For RBAC support:
+		rbac:
+			create: true
+
+		# If true, create & use Pod Security Policy resources
+		# https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+		podSecurityPolicy:
+			enabled: true
+
+		## Set pod priorityClassName
+		# priorityClassName: ""
+
+		serviceAccount:
+			create: true
+
+		resources: {}
+			limits:
+				cpu: 50m
+				memory: 32Mi
+			requests:
+				cpu: 5m
+				memory: 16Mi
