@@ -67,7 +67,7 @@ spec:
     serviceAccount:
       create: true
 
-    resources: {}
+    resources:
       limits:
         cpu: 50m
         memory: 32Mi
