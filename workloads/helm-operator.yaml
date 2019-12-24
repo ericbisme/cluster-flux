@@ -99,7 +99,7 @@ spec:
     metadata:
       annotations:
         checksum/repositories: 5ec1dbb4e14760710846f3e433ac4ce462f6da2f86bcd904544b768d42ea1730
-        fluxcd.io/automated: true
+        fluxcd.io/automated: "true"
         fluxcd.io/tag.flux-helm-operator: helm-v3-dev-*
         linkerd.io/inject: enabled
       labels:
