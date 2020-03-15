@@ -99,8 +99,8 @@ spec:
     metadata:
       annotations:
         checksum/repositories: 5ec1dbb4e14760710846f3e433ac4ce462f6da2f86bcd904544b768d42ea1730
-        fluxcd.io/automated: "true"
-        fluxcd.io/tag.flux-helm-operator: helm-v3-dev-*
+        fluxcd.io/automated: '"true"'
+        fluxcd.io/tag.flux-helm-operator: 1.0.*
         linkerd.io/inject: enabled
       labels:
         app: helm-operator
@@ -119,7 +119,7 @@ spec:
         emptyDir: {}
       containers:
       - name: flux-helm-operator
-        image: docker.io/fluxcd/helm-operator-prerelease:helm-v3-dev-53b6a21d
+        image: docker.io/fluxcd/helm-operator:1.0.0-rc4
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -155,9 +155,6 @@ spec:
         - --log-release-diffs=false
         - --workers=2
         - --tiller-namespace=kube-system
-        env:
-        - name: HELM_VERSION
-          value: v3
         resources:
           requests:
             cpu: 50m
