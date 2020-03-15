@@ -21,7 +21,7 @@ helm-operator:
 	--set configureRepositories.repositories[1].url=https://charts.fluxcd.io \
 	--set configureRepositories.repositories[2].name=podinfo \
 	--set configureRepositories.repositories[2].url=https://stefanprodan.github.io/podinfo \
-	--set annotations."fluxcd\.io/automated"="true" \
+	--set annotations."fluxcd\.io/automated"=\"true\" \
 	--set annotations."fluxcd\.io/tag\.flux-helm-operator"="helm-v3-dev-*" \
 	--set annotations."linkerd\.io/inject"="enabled" \
 	> helm-operator.yaml
