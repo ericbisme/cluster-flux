@@ -45,6 +45,7 @@ kind: Service
 metadata:
   labels:
     k8s-app: unifi-exporter
+    release: prometheus-operator
   name: unifi-exporter
   namespace: klippy
 spec:
