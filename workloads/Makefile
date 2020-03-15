@@ -7,7 +7,8 @@ clean:
 
 .PHONY: helm-operator
 helm-operator:
-	helm3 template --name-template helm-operator fluxcd/helm-operator \
+	helm fetch fluxcd/helm-operator -d /tmp --untar && \
+	helm3 template --name-template helm-operator /tmp/helm-operator \
 	--namespace flux \
 	--set git.ssh.secretName=flux-git-deploy \
 	--set helm.versions=v3 \
