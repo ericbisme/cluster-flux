@@ -83,6 +83,8 @@ spec:
         labels: {}
         tls: []
       prometheusSpec:
+        retention: 90d
+        retentionSize: "50GB"
         storageSpec:
           volumeClaimTemplate:
             spec:
