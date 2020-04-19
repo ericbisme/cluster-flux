@@ -19,6 +19,9 @@ spec:
       createCustomResource: false
       cleanupCustomResource: false
     alertmanager:
+      alertmanagerSpec:
+        useExistingSecret: true
+        configSecret: alertmanager-thepit
       ingress:
         enabled: true
         annotations:
