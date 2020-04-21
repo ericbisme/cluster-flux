@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    helm.fluxcd.io/automated: "true"
+  name: nut-exporter-porter
+  namespace: klippy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: nut-exporter-porter
+  template:
+    metadata:
+      labels:
+        k8s-app: nut-exporter-porter
+    spec:
+      containers:
+      - image: quay.io/klippo/nut_exporter
+        name: nut-exporter-porter
+        command: ["/bin/nut_exporter"]
+        args: ["-ups", "cyberpower@porter"]
+        ports:
+        - containerPort: 8100
+          name: metrics
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: nut-exporter-porter
+  name: nut-exporter-porter
+  namespace: klippy
+spec:
+  ports:
+  - name: http-metrics
+    port: 8100
+    protocol: TCP
+    targetPort: metrics
+  selector:
+    k8s-app: nut-exporter-porter
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: nut-exporter-porter
+    release: prometheus-operator
+  name: nut-exporter-porter
+  namespace: klippy
+spec:
+  jobLabel: k8s-app
+  selector:
+    matchLabels:
+      k8s-app: nut-exporter-porter
+  namespaceSelector:
+    matchNames:
+    - klippy
+  endpoints:
+  - interval: 60s
+    port: http-metrics
+    path: "/metrics"
+    targetPort: 8100
