@@ -1,0 +1,42 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: pihole-cloudflared
+  namespace: kube-system
+  helm.fluxcd.io/automated: "true"
+  helm.fluxcd.io/tag.chart-image: semver:~1
+spec:
+  releaseName: dns
+  targetNamespace: kube-system
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    git: https://github.com/ericbisme/pihole-cloudflared.git
+    path: /
+    ref: master
+  values:
+    service:
+      type_dns: LoadBalancer
+      loadBalancerIP_dns: 192.168.10.129
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+      hosts:
+        - host: dns.ericbisme.net
+          paths:
+            - "/"
+        - host: pi.hole
+          paths:
+            - "/"
+
+    virtual_host: dns.ericbisme.net
+
+    config:
+      setupVars:
+        DNS_FQDN_REQUIRED: "false"
+        DNS_BOGUS_PRIV:    "false"
+        DNSSEC:            "true"
+        IPV4_ADDRESS:      192.168.10.129
