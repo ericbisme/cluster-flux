@@ -33,7 +33,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-0.7.0
+    chart: helm-operator-1.0.1
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -44,7 +44,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-0.7.0
+    chart: helm-operator-1.0.1
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -66,7 +66,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-0.7.0
+    chart: helm-operator-1.0.1
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -85,7 +85,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-0.7.0
+    chart: helm-operator-1.0.1
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -106,7 +106,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-0.7.0
+    chart: helm-operator-1.0.1
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -116,6 +116,8 @@ spec:
     matchLabels:
       app: helm-operator
       release: helm-operator
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
@@ -137,7 +139,7 @@ spec:
         emptyDir: {}
       containers:
       - name: flux-helm-operator
-        image: docker.io/fluxcd/helm-operator:1.0.0-rc9
+        image: docker.io/fluxcd/helm-operator:1.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -172,9 +174,10 @@ spec:
         - --git-timeout=20s
         - --git-poll-interval=5m
         - --charts-sync-interval=3m
+        - --status-update-interval=30s
         - --update-chart-deps=true
         - --log-release-diffs=false
-        - --workers=2
+        - --workers=4
         - --tiller-namespace=kube-system
         resources:
           requests:
