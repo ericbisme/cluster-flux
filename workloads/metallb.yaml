@@ -17,10 +17,14 @@ spec:
     configInline:
       address-pools:
         - name: default
-          protocol: layer2
+          protocol: bgp
           addresses:
           - 192.168.10.128-192.168.10.254
           avoid-buggy-ips: true
+      peers:
+        - peer-address: 192.168.10.1
+          peer-asn: 64501
+          my-asn: 64500
     controller:
       resources:
         requests:
