@@ -20,7 +20,7 @@ spec:
       - image: quay.io/klippo/nut_exporter
         name: nut-exporter-k8s-node1
         command: ["/bin/nut_exporter"]
-        args: ["-ups", "cyberpower@k8s-node1.ericbisme.net."]
+        args: ["-ups", "cyberpower@k8s-node1"]
         ports:
         - containerPort: 8100
           name: metrics
