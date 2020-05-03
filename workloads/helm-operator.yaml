@@ -1,4 +1,15 @@
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: helm-operator
+  labels:
+    app: helm-operator
+    chart: helm-operator-0.3.0
+    release: helm-operator
+    heritage: Helm
+  namespace: flux
+---
+apiVersion: v1
 kind: Secret
 metadata:
   name: flux-helm-repositories
@@ -27,24 +38,13 @@ data:
     preferences: {}
     users: []
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: helm-operator
-  labels:
-    app: helm-operator
-    chart: helm-operator-1.0.1
-    release: helm-operator
-    heritage: Helm
-  namespace: flux
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-1.0.1
+    chart: helm-operator-0.3.0
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -66,7 +66,7 @@ metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-1.0.1
+    chart: helm-operator-0.3.0
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -79,34 +79,13 @@ subjects:
   namespace: flux
   kind: ServiceAccount
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: helm-operator
-  labels:
-    app: helm-operator
-    chart: helm-operator-1.0.1
-    release: helm-operator
-    heritage: Helm
-  namespace: flux
-spec:
-  type: ClusterIP
-  ports:
-  - port: 3030
-    targetPort: http
-    protocol: TCP
-    name: http
-  selector:
-    app: helm-operator
-    release: helm-operator
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helm-operator
   labels:
     app: helm-operator
-    chart: helm-operator-1.0.1
+    chart: helm-operator-0.3.0
     release: helm-operator
     heritage: Helm
   namespace: flux
@@ -116,12 +95,13 @@ spec:
     matchLabels:
       app: helm-operator
       release: helm-operator
-  strategy:
-    type: Recreate
   template:
     metadata:
       annotations:
         checksum/repositories: 5ec1dbb4e14760710846f3e433ac4ce462f6da2f86bcd904544b768d42ea1730
+        fluxcd.io/automated: '"true"'
+        fluxcd.io/tag.flux-helm-operator: 1.0.*
+        linkerd.io/inject: enabled
       labels:
         app: helm-operator
         release: helm-operator
@@ -137,21 +117,9 @@ spec:
           secretName: flux-helm-repositories
       - name: repositories-cache
         emptyDir: {}
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-          - 1.1.1.1
-          - 1.0.0.1
-        searches:
-          - flux.svc.cluster.local
-          - svc.cluster.local
-          - cluster.local
-        options:
-          - name: ndots
-            value: "2"
       containers:
       - name: flux-helm-operator
-        image: docker.io/fluxcd/helm-operator:1.0.1
+        image: docker.io/fluxcd/helm-operator:1.0.0-rc4
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -173,23 +141,19 @@ spec:
           mountPath: /etc/fluxd/ssh
           readOnly: true
         - name: repositories-yaml
-          mountPath: /root/.helm/repository/repositories.yaml
+          mountPath: /var/fluxd/helm/repository/repositories.yaml
           subPath: repositories.yaml
           readOnly: true
         - name: repositories-cache
-          mountPath: /root/.cache/helm/repository
-          subPath: v3
+          mountPath: /var/fluxd/helm/repository/cache
         args:
-        - --enabled-helm-versions=v3
-        - --helm-repository-import=v3:/root/.helm/repository/repositories.yaml
         - --log-format=fmt
         - --git-timeout=20s
         - --git-poll-interval=5m
         - --charts-sync-interval=3m
-        - --status-update-interval=30s
         - --update-chart-deps=true
         - --log-release-diffs=false
-        - --workers=4
+        - --workers=2
         - --tiller-namespace=kube-system
         resources:
           requests:
