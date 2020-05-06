@@ -25,7 +25,7 @@ spec:
           name: metrics
         volumeMounts:
           - name: config
-            mountPath: "/config"
+            mountPath: "/etc/unifi-poller"
         env:
           - name: UP_UNIFI_DEFAULT_URL
             value: "https://unifi.ericbisme.net:8443"

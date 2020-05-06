@@ -10,7 +10,7 @@ alertmanager:
 
 .PHONY: unifi-poller
 unifi-poller:
-	 sops -d unifi-poller.yaml | kubectl create secret generic unifi-poller-credentials -n klippy --from-file=unifi-poller.yaml=/dev/stdin --dry-run=client -o yaml | kubectl replace -f -
+	 sops -d unifi-poller.yaml | kubectl replace -f -
 
 .PHONY: traefik-route53-dnsprovider-config
 traefik-route53-dnsprovider-config:
