@@ -1,0 +1,23 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-pushgateway
+  namespace: klippy
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: prometheus-pushgateway
+  targetNamespace: klippy
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-pushgateway
+    version: 1.4.0
+  values:
+    serviceMonitor:
+      enabled: true
+      namespace: klippy
+      additionalLabels:
+        release: prometheus-operator
