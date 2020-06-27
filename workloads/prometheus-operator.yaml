@@ -33,6 +33,9 @@ spec:
            - alertmanager.ericbisme.net
         labels: {}
         tls: []
+    
+    kubelet:
+      resource: false
 
     ## Using default values from https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
     ##
