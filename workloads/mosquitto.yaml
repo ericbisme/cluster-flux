@@ -1,0 +1,30 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: mosquitto
+  namespace: mosquitto
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: mosquitto
+  targetNamespace: mosquitto
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://halkeye.github.io/helm-charts/
+    name: mosquitto
+    version: 0.1.0
+  values:
+    securityContext:
+      runAsUser: 2001
+      runAsGroup: 2001
+    service:
+      type: LoadBalancer
+    resources:
+      limits:
+        cpu: 50m
+        memory: 50Mi
+      requests:
+        cpu: 1m
+        memory: 5Mi
