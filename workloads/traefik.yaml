@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
-    version: 1.86.2
+    version: 1.87.1
   values:
     rbac:
       enabled: true
@@ -64,6 +64,8 @@ spec:
     statistics: {}
       ## Number of recent errors to show in the ‘Health’ tab
       # recentErrors:
+
+    externalTrafficPolicy: Local
 
     acme:
       persistence:
