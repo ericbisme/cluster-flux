@@ -16,6 +16,8 @@ spec:
     name: traefik
     version: 1.87.1
   values:
+    kubernetes:
+      ingressClass: traefik
     rbac:
       enabled: true
 
