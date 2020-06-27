@@ -34,6 +34,8 @@ spec:
     metrics:
       prometheus:
         enabled: true
+        service:
+          name: traefik
         ## If true, prevents exposing port 8080 on the main Traefik service, reserving
         ## it to the dashboard service only
         restrictAccess: false
