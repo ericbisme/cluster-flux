@@ -1,3 +1,4 @@
+---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -21,5 +22,24 @@ spec:
       - ReadWriteOnce
       size: 10Gi
       annotations: {}
-      # subPath: ""
-      # existingClaim:
+
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: promtail
+  namespace: klippy
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: promtail
+  targetNamespace: klippy
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://grafana.github.io/loki/charts
+    name: promtail
+    version: 0.23.4
+  values:
+    loki:
+      serviceName: loki
