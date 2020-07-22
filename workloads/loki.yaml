@@ -1,0 +1,25 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: klippy
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: loki
+  targetNamespace: klippy
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://grafana.github.io/loki/charts
+    name: loki
+    version: 0.30.2
+  values:
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 10Gi
+      annotations: {}
+      # subPath: ""
+      # existingClaim:
