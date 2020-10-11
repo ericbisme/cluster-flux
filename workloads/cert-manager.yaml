@@ -1,0 +1,19 @@
+---
+# https://community.ui.com/questions/BGP-instructions-for-USG-K8s-MetalLB/b61e2f67-34f2-4571-9140-8d6b9cde2d72
+# http://blog.cowger.us/2019/02/10/using-metallb-with-the-unifi-usg-for-in-home-kubernetes-loadbalancer-services.html
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  releaseName: cert-manager
+  targetNamespace: kube-system
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://charts.jetstack.io
+    name: cert-manager
+    version: 1.0.3
+  values:

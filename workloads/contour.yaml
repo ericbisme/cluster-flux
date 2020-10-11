@@ -1,0 +1,19 @@
+---
+# https://community.ui.com/questions/BGP-instructions-for-USG-K8s-MetalLB/b61e2f67-34f2-4571-9140-8d6b9cde2d72
+# http://blog.cowger.us/2019/02/10/using-metallb-with-the-unifi-usg-for-in-home-kubernetes-loadbalancer-services.html
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: contour
+  namespace: kube-system
+spec:
+  releaseName: contour
+  targetNamespace: kube-system
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: contour
+    version: 2.3.2
+  values:
