@@ -20,12 +20,15 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: klippy
+      selector:
+        release: prom-operator
       params:
         enabled: true
-        module:
-        - apcups
-        target:
-        - 192.168.1.104
+        conf:
+          module:
+          - apcups
+          target:
+          - 192.168.1.104
 
     config: |
       apcups:
