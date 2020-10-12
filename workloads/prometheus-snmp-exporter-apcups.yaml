@@ -6,7 +6,7 @@ metadata:
   namespace: klippy
 spec:
   releaseName: snmp-apcups
-  targetNamespace: kube-system
+  targetNamespace: klippy
   timeout: 300
   resetValues: false
   forceUpgrade: false
