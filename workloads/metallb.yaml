@@ -27,7 +27,7 @@ spec:
         - name: unifi
           protocol: bgp
           addresses:
-          - 192.168.1.3/32
+          - 192.168.1.2/32
           avoid-buggy-ips: true
       peers:
         - peer-address: 192.168.10.1

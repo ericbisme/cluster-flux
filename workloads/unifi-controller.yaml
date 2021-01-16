@@ -18,37 +18,37 @@ spec:
   values:
     guiService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
     controllerService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
     stunService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
     discoveryService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
     syslogService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
     speedtestService:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.3
+      loadBalancerIP: 192.168.1.2
       annotations:
         metallb.universe.tf/allow-shared-ip: "true"
         metallb.universe.tf/address-pool: unifi
