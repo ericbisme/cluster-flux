@@ -33,6 +33,9 @@ spec:
         - peer-address: 192.168.10.1
           peer-asn: 64501
           my-asn: 64500
+        - peer-address: 192.168.1.1
+          peer-asn: 64503
+          my-asn: 64502
     controller:
       resources:
         requests:
