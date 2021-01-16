@@ -73,3 +73,11 @@ spec:
     extraVolumeMounts:
       - name: unifi-backup
         mountPath: /var/lib/unifi/backup/autobackup/
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+      path: /
+      hosts:
+        - host: unifi.ericbisme.net
