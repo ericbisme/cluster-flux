@@ -24,6 +24,11 @@ spec:
           addresses:
           - 192.168.10.128-192.168.10.254
           avoid-buggy-ips: true
+        - name: unifi
+          protocol: bgp
+          addresses:
+          - 192.168.1.3
+          avoid-buggy-ips: true
       peers:
         - peer-address: 192.168.10.1
           peer-asn: 64501
