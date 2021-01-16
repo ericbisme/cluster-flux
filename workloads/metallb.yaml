@@ -40,7 +40,7 @@ spec:
           memory: 4Mi
         limits:
           cpu: 256m
-          memory: 16Mi
+          memory: 32Mi
     speaker:
       resources:
         requests:
