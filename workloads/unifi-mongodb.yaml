@@ -1,0 +1,23 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: unifi-mongodb
+  namespace: unifi
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: unifi-mongodb
+  targetNamespace: unifi
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: mongodb
+    version: 10.4.0
+  values:
+    auth:
+      enabled: false
+    persistence:
+      enabled: true
+      existingClaim: unifi-mongodb
