@@ -61,7 +61,7 @@ kind: ServiceMonitor
 metadata:
   labels:
     k8s-app: unifi-poller
-    release: prometheus-operator
+    release: kube-prometheus-stack
   name: unifi-poller
   namespace: klippy
 spec:

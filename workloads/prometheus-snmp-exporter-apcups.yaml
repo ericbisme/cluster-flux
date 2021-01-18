@@ -21,7 +21,7 @@ spec:
       enabled: true
       namespace: klippy
       selector:
-        release: prom-operator
+        release: kube-prometheus-stack
       params:
         enabled: true
         conf:

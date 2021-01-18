@@ -20,4 +20,4 @@ spec:
       enabled: true
       namespace: klippy
       additionalLabels:
-        release: prometheus-operator
+        release: kube-prometheus-stack
