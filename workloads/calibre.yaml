@@ -35,10 +35,9 @@ spec:
       annotations:
         kubernetes.io/ingress.class: traefik
         kubernetes.io/tls-acme: "true"
+      path: /
       hosts:
         - host: books.ericbisme.net
-          paths:
-            - "/"
 
     podSecurityContext:
        fsGroup: 1000
