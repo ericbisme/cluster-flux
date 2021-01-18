@@ -12,27 +12,17 @@ spec:
   resetValues: false
   forceUpgrade: false
   chart:
-    git: https://github.com/ericbisme/cailbre-web.git
-    ref: master
-    path: /
+    git: https://k8s-at-home.com/charts/
+    name: calibre-web
+    version: 4.3.1
   values:
-    volumes:
-    - name: calibre
-      persistentVolumeClaim:
-        claimName: media
-    - name: calibre-web
-      persistentVolumeClaim:
-        claimName: calibre-web
-
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        kubernetes.io/tls-acme: "true"
-      hosts:
-        - host: books.ericbisme.net
-          paths:
-            - "/"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-config
+      books:
+        enabled: true
+        existingClaim: books
 
     env:
     - name: PUID
@@ -40,33 +30,24 @@ spec:
     - name: PGID
       value: 1000
 
-    podSecurityContext:
-       fsGroup: 1000
+    common:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          kubernetes.io/tls-acme: "true"
+        hosts:
+          - host: books.ericbisme.net
+            paths:
+              - "/"
 
-    securityContext:
-       capabilities:
-         drop:
-         - ALL
-       readOnlyRootFilesystem: true
-       runAsNonRoot: true
-       runAsUser: 1000
+      podSecurityContext:
+         fsGroup: 1000
 
-    persistence:
-      data:
-        claimName: "books"
-      config:
-        claimName: "calibre-config"
-
-    annotations:
-      linkerd.io/inject: enabled
-
-    podAnnotations:
-      linkerd.io/inject: enabled
-
-    resources:
-      limits:
-        cpu: 150m
-        memory: 256Mi
-      requests:
-        cpu: 100m
-        memory: 128Mi
+      securityContext:
+         capabilities:
+           drop:
+           - ALL
+         readOnlyRootFilesystem: true
+         runAsNonRoot: true
+         runAsUser: 1000
