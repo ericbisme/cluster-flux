@@ -2,11 +2,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: loki
+  name: loki-stack
   namespace: klippy
   helm.fluxcd.io/automated: "true"
 spec:
-  releaseName: loki
+  releaseName: loki-stack
   targetNamespace: klippy
   timeout: 300
   resetValues: false
