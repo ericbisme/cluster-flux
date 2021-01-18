@@ -11,9 +11,9 @@ spec:
   resetValues: false
   forceUpgrade: false
   chart:
-    repository: https://kubernetes-charts.storage.googleapis.com/
-    name: prometheus-operator
-    version: 8.15.6
+    repository: https://prometheus-community.github.io/helm-charts
+    name: kube-prometheus-stack
+    version: 12.12.1
   values:
     prometheusOperator:
       createCustomResource: false
