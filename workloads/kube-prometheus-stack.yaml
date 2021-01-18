@@ -64,6 +64,11 @@ spec:
         dashboards:
           enabled: true
           label: grafana_dashboard
+          provider:
+            foldersFromFilesStructure: true
+          annotations: 
+            k8s-sidecar-target-directory: "/tmp/dashboards/kubernetes"
+
         datasources:
           enabled: true
           defaultDatasourceEnabled: true
