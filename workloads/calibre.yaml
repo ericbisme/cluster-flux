@@ -19,25 +19,27 @@ spec:
     persistence:
       config:
         enabled: true
+        mountPath: /config
         existingClaim: calibre-config
       books:
         enabled: true
+        mountPath: /books
         existingClaim: books
 
     env:
-    - name: PUID
-      value: 1000
-    - name: PGID
-      value: 1000
+      PUID: 1000
+      PGID: 1000
 
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: traefik
         kubernetes.io/tls-acme: "true"
-      path: /
       hosts:
-        - books.ericbisme.net
+        - host: books.ericbisme.net
+          paths: 
+            - path: "/"
+              pathType: Prefix
 
     podSecurityContext:
        fsGroup: 1000
