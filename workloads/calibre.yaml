@@ -43,10 +43,3 @@ spec:
 
     podSecurityContext:
        fsGroup: 1000
-
-    securityContext:
-       capabilities:
-         drop:
-         - ALL
-       runAsNonRoot: true
-       runAsUser: 1000
