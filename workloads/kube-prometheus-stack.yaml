@@ -1,11 +1,11 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: prometheus-operator
+  name: kube-prometheus-stack
   namespace: klippy
   helm.fluxcd.io/automated: "true"
 spec:
-  releaseName: prometheus-operator
+  releaseName: kube-prometheus-stack
   targetNamespace: klippy
   timeout: 300
   resetValues: false
