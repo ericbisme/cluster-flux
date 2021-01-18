@@ -40,3 +40,5 @@ spec:
     repository: https://grafana.github.io/helm-charts
     name: promtail
     version: 3.0.0
+  values:
+    lokiAddress: http://loki/loki/api/v1/push
