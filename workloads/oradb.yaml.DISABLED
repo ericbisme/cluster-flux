@@ -1,0 +1,112 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: peoplesoft
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: psp:peoplesoft:privileged
+  namespace: peoplesoft
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: psp:privileged
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts:peoplesoft
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oracle-data
+  namespace: peoplesoft
+spec:
+  storageClassName: managed-nfs-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 16Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  namespace: peoplesoft
+  labels:
+    app: database
+    version: 12.1.0.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+      version: 12.1.0.2
+  template:
+    metadata:
+      name: database
+      labels:
+        app: database
+        version: 12.1.0.2
+    spec:
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+      - name: oracle-data
+        persistentVolumeClaim:
+          claimName: oracle-data
+      containers:
+      - name: database
+        command:
+        - /home/oracle/setup/dockerInit.sh
+        image: store/oracle/database-enterprise:12.2.0.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: 2500Mi
+        ports:
+        - containerPort: 1521
+          hostPort: 1521
+        volumeMounts:
+          - mountPath: /dev/shm
+            name: dshm
+          - mountPath: /oradata
+            name: oracle-data
+        env:
+          - name: DB_SID
+            value: CSPUM4
+          - name: DB_PDB
+            value: OraPdb
+          - name: DB_PASSWD
+            value: donotcare
+          - name: DB_DOMAIN
+            value: ericbisme.net
+          - name: DB_BUNDLE
+            value: basic
+          - name: DB_MEMORY
+            value: 2g
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+  namespace: peoplesoft
+spec:
+  type: LoadBalancer
+  selector:
+    app: database
+    version: 12.1.0.2
+  ports:
+  - protocol: TCP
+    port: 1521
+    targetPort: 1521
