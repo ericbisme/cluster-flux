@@ -12,9 +12,9 @@ spec:
   resetValues: false
   forceUpgrade: false
   chart:
-    repository: https://grafana.github.io/loki/charts
+    repository: https://grafana.github.io/helm-charts
     name: loki
-    version: 0.30.2
+    version: 2.3.0
   values:
     persistence:
       enabled: true
@@ -37,9 +37,6 @@ spec:
   resetValues: false
   forceUpgrade: false
   chart:
-    repository: https://grafana.github.io/loki/charts
+    repository: https://grafana.github.io/helm-charts
     name: promtail
-    version: 0.23.4
-  values:
-    loki:
-      serviceName: loki
+    version: 3.0.0

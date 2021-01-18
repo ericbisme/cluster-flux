@@ -31,6 +31,8 @@ spec:
             value: "https://unifi.ericbisme.net:8443"
           - name: UP_UNIFI_DEFAULT_VERIFY_SSL
             value: "false"
+          - name: UP_UNIFI_DEFAULT_SAVE_DPI
+            value: "true"
           - name: UP_INFLUXDB_DISABLE
             value: "true"
       volumes:
