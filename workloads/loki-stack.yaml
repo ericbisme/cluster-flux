@@ -1,0 +1,25 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: klippy
+  helm.fluxcd.io/automated: "true"
+spec:
+  releaseName: loki
+  targetNamespace: klippy
+  timeout: 300
+  resetValues: false
+  forceUpgrade: false
+  chart:
+    repository: https://grafana.github.io/helm-charts
+    name: loki-stack
+    version: 2.3.1
+  values:
+    loki:
+      persistence:
+        enabled: true
+        accessModes:
+        - ReadWriteOnce
+        size: 10Gi
+        annotations: {}
