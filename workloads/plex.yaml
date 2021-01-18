@@ -11,22 +11,20 @@ spec:
   resetValues: false
   forceUpgrade: false
   chart:
-    git: https://github.com/munnerz/kube-plex
-    ref: "4604249"
-    path: charts/kube-plex
+    repository: https://billimek.com/billimek-charts/ 
+    name: plex
+    version: 1.2.0
   values:
     image:
       tag: plexpass
       pullPolicy: IfNotPresent
 
-    kubePlex:
-      enabled: false
-      repository: quay.io/munnerz/kube-plex
-      tag: latest
-      pullPolicy: Always
+    # claimToken: ""
 
-    nodeSelector:
-      kubernetes.io/hostname: k8s-node2
+    changeConfigDirOwnership: "false"
+    plexUid: 1000
+    plexGid: 1000
+    advertiseIp: "https://192.168.10.128:443"
 
     # Set the timezone of the plex server
     timezone: America/Denver
@@ -37,17 +35,11 @@ spec:
 
     ingress:
       enabled: true
-      # Used to create an Ingress record.
-      hosts:
-        - plex.ericbisme.net
       annotations:
         kubernetes.io/ingress.class: traefik
-        kubernetes.io/tls-acme: true
-      tls:
-        # Secrets must be manually created in the namespace.
-        # - secretName: chart-example-tls
-        #   hosts:
-        #     - chart-example.local
+        kubernetes.io/tls-acme: "true"
+      hosts:
+       - plex.ericbisme.net
 
     rbac:
       create: true
@@ -57,18 +49,9 @@ spec:
 
     persistence:
       transcode:
-        enabled: false
-        # Optionally specify claimName to manually override the PVC to be used for
-        # the transcode directory. If claimName is specified, storageClass and size
-        # are ignored.
-        claimName: "plex-transcode"
-        # Optionally specify a storage class to be used for the transcode directory.
-        # If not specified and claimName is not specified, the default storage
-        # class will be used.
-        # storageClass: ""
-        # The requested size of the volume to be used when creating a
-        # PersistentVolumeClaim.
-        size: 20Gi
+        enabled: true
+        emptyDir:
+          medium: "Memory"
       data:
         claimName: "media"
       config:
@@ -76,6 +59,17 @@ spec:
 
     podAnnotations:
       linkerd.io/inject: enabled
+
+    # Probes configuration
+    probes:
+      liveness:
+        initialDelaySeconds: 120
+        failureThreshold: 5
+        timeoutSeconds: 5
+      readiness:
+        initialDelaySeconds: 120
+        failureThreshold: 5
+        timeoutSeconds: 5
 
     resources:
       limits:

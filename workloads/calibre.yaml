@@ -1,3 +1,4 @@
+---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -30,8 +31,25 @@ spec:
         kubernetes.io/tls-acme: "true"
       hosts:
         - host: books.ericbisme.net
-          paths: 
+          paths:
             - "/"
+
+    env:
+    - name: PUID
+      value: 1000
+    - name: PGID
+      value: 1000
+
+    podSecurityContext:
+       fsGroup: 1000
+
+    securityContext:
+       capabilities:
+         drop:
+         - ALL
+       readOnlyRootFilesystem: true
+       runAsNonRoot: true
+       runAsUser: 1000
 
     persistence:
       data:
