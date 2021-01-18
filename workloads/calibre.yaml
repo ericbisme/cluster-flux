@@ -30,24 +30,23 @@ spec:
     - name: PGID
       value: 1000
 
-    common:
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-          kubernetes.io/tls-acme: "true"
-        hosts:
-          - host: books.ericbisme.net
-            paths:
-              - "/"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        kubernetes.io/tls-acme: "true"
+      hosts:
+        - host: books.ericbisme.net
+          paths:
+            - "/"
 
-      podSecurityContext:
-         fsGroup: 1000
+    podSecurityContext:
+       fsGroup: 1000
 
-      securityContext:
-         capabilities:
-           drop:
-           - ALL
-         readOnlyRootFilesystem: true
-         runAsNonRoot: true
-         runAsUser: 1000
+    securityContext:
+       capabilities:
+         drop:
+         - ALL
+       readOnlyRootFilesystem: true
+       runAsNonRoot: true
+       runAsUser: 1000
