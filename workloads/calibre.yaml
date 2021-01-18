@@ -37,7 +37,7 @@ spec:
         kubernetes.io/tls-acme: "true"
       path: /
       hosts:
-        - host: books.ericbisme.net
+        - books.ericbisme.net
 
     podSecurityContext:
        fsGroup: 1000
