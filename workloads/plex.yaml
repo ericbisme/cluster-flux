@@ -19,7 +19,11 @@ spec:
       tag: plexpass
       pullPolicy: IfNotPresent
 
-    # claimToken: ""
+    allowedNetworks:
+      - 127.0.0.1
+      - 10.233.0.0/16
+      - 192.168.10.0/24
+      - 192.168.1.0/24
 
     changeConfigDirOwnership: "false"
     plexUid: 1000
@@ -29,23 +33,20 @@ spec:
     # Set the timezone of the plex server
     timezone: America/Denver
 
-    service:
+    serviceTCP:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.10.132
+      annotations:
+        metallb.universe.tf/allow-shared-ip: plex-svc
       type: ClusterIP
       port: 32400
 
-    ingress:
-      enabled: true
+    serviceUDP:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.10.132
       annotations:
-        kubernetes.io/ingress.class: traefik
-        kubernetes.io/tls-acme: "true"
-      hosts:
-       - plex.ericbisme.net
-
-    rbac:
-      create: true
-      # Specify create: false and serviceAccountName to manually manage the service
-      # account for this deployment
-      ## serviceAccountName: ""
+        metallb.universe.tf/allow-shared-ip: plex-svc
+      type: ClusterIP
 
     persistence:
       transcode:
