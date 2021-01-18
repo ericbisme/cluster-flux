@@ -38,7 +38,6 @@ spec:
       loadBalancerIP: 192.168.10.132
       annotations:
         metallb.universe.tf/allow-shared-ip: plex-svc
-      type: ClusterIP
       port: 32400
 
     serviceUDP:
@@ -46,7 +45,6 @@ spec:
       loadBalancerIP: 192.168.10.132
       annotations:
         metallb.universe.tf/allow-shared-ip: plex-svc
-      type: ClusterIP
 
     persistence:
       transcode:
