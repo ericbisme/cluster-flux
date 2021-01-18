@@ -60,6 +60,9 @@ spec:
         labels: {}
         tls: []
 
+      plugins:
+        - grafana-piechart-panel
+
       sidecar:
         dashboards:
           enabled: true
