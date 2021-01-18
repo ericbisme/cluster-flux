@@ -6,18 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      dnsPolicy: "None"
-      dnsConfig:
-        nameservers:
-          - 1.1.1.1
-          - 1.0.0.1
-        searches:
-          - flux.svc.cluster.local
-          - svc.cluster.local
-          - cluster.local
-        options:
-          - name: ndots
-            value: "2"
       containers:
         - name: flux
           args:
