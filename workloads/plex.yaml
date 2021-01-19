@@ -1,3 +1,4 @@
+---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
@@ -28,7 +29,7 @@ spec:
     changeConfigDirOwnership: "false"
     plexUid: 1000
     plexGid: 1000
-    advertiseIp: "https://192.168.10.128:443"
+    advertiseIp: "https://192.168.10.132:443"
 
     # Set the timezone of the plex server
     timezone: America/Denver
