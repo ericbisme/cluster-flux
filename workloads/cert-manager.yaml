@@ -36,7 +36,7 @@ spec:
         route53:
           region: us-west-2
           hostedZoneID: Z24FPOSZ13XYWF
-          accessKeyID: AKIAIK334BXLNPYBCEJA
+          accessKeyID: AKIAXZPUPR7ZC3CJTM3Q
           secretAccessKeySecretRef:
             name: cert-manager-route53-ericbisme
             key: secretAccessKey
@@ -59,7 +59,7 @@ spec:
         route53:
           region: us-west-2
           hostedZoneID: Z24FPOSZ13XYWF
-          accessKeyID: AKIAIK334BXLNPYBCEJA
+          accessKeyID: AKIAXZPUPR7ZC3CJTM3Q
           secretAccessKeySecretRef:
             name: cert-manager-route53-ericbisme
             key: secretAccessKey
