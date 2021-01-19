@@ -16,10 +16,6 @@ spec:
     name: plex
     version: 2.1.1
   values:
-    image:
-      tag: plexpass
-      pullPolicy: IfNotPresent
-
     allowedNetworks:
       - 127.0.0.1
       - 10.233.0.0/16
@@ -49,9 +45,7 @@ spec:
 
     persistence:
       transcode:
-        enabled: true
-        emptyDir:
-          medium: "Memory"
+        enabled: false
       data:
         claimName: "media"
       config:
@@ -78,3 +72,37 @@ spec:
       requests:
         cpu: 250m
         memory: 500Mi
+
+    certificate:
+      pkcsMangler:
+        enabled: true
+        certificateSecret:
+          name: "plex-ericbisme-net"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: plex-ericbisme-net
+  namespace: thepit
+spec:
+  secretName: plex-ericbisme-net
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+    - ericbisme.net
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+  - plex.ericbisme.net
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+    group: cert-manager.io
+
