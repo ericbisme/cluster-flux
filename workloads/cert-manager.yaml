@@ -5,10 +5,10 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: cert-manager
-  namespace: kube-system
+  namespace: klippy
 spec:
   releaseName: cert-manager
-  targetNamespace: kube-system
+  targetNamespace: klippy
   timeout: 300
   resetValues: false
   forceUpgrade: false
@@ -16,3 +16,54 @@ spec:
     repository: https://charts.jetstack.io
     name: cert-manager
     version: 1.1.0
+  values:
+    extraAgs:
+      - --dns01-recursive-nameservers-only
+      - --dns01-recursive-nameservers="8.8.8.8:53,1.1.1.1:53"
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: zaidan@sumologic.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging-issuer-account-key
+    solvers:
+    - dns01:
+        route53:
+          region: us-west-2
+          hostedZoneID: Z24FPOSZ13XYWF
+          accessKeyID: AKIAIK334BXLNPYBCEJA
+          secretAccessKeySecretRef:
+            name: cert-manager-route53-ericbisme
+            key: secretAccessKey
+      selector:
+        dnsZones:
+        - 'ericbisme.net'
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+spec:
+  acme:
+    email: zaidan@sumologic.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-production-issuer-account-key
+    solvers:
+    - dns01:
+        route53:
+          region: us-west-2
+          hostedZoneID: Z24FPOSZ13XYWF
+          accessKeyID: AKIAIK334BXLNPYBCEJA
+          secretAccessKeySecretRef:
+            name: cert-manager-route53-ericbisme
+            key: secretAccessKey
+      selector:
+        dnsZones:
+        - 'ericbisme.net'
+
