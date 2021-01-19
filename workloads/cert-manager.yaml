@@ -17,9 +17,9 @@ spec:
     name: cert-manager
     version: 1.1.0
   values:
-    extraAgs:
+    extraArgs:
       - --dns01-recursive-nameservers-only
-      - --dns01-recursive-nameservers="8.8.8.8:53,1.1.1.1:53"
+      - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
