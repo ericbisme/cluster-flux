@@ -28,7 +28,7 @@ spec:
             mountPath: "/etc/unifi-poller"
         env:
           - name: UP_UNIFI_DEFAULT_URL
-            value: "https://unifi.ericbisme.net:8443"
+            value: "https://192.168.1.2"
           - name: UP_UNIFI_DEFAULT_VERIFY_SSL
             value: "false"
           - name: UP_UNIFI_DEFAULT_SAVE_DPI
