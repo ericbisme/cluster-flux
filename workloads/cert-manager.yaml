@@ -27,7 +27,7 @@ metadata:
   name: letsencrypt-staging
 spec:
   acme:
-    email: zaidan@sumologic.com
+    email: contact@ericbisme.net
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-staging-issuer-account-key
@@ -50,7 +50,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    email: zaidan@sumologic.com
+    email: contact@ericbisme.net
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-production-issuer-account-key
