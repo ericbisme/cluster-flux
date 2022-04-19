@@ -23,7 +23,13 @@ spec:
     ingress:
       enabled: true
       annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        ingress.kubernetes.io/force-ssl-redirect: "true"
         kubernetes.io/ingress.class: traefik
+      tls:
+        - secretName: dns-ericbisme-net
+          hosts:
+            - dns.ericbisme.net
       hosts:
         - host: dns.ericbisme.net
           paths:
